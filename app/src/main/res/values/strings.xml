@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MartianRobots</string>
+
+    <string name="ti_upper_rigth_coodinates">Upper-rigth coordinates (X Y)</string>
+    <string name="ti_upper_rigth_coodinates_error">Enter the upper-rigth coordinates in correct format</string>
+    <string name="ti_initial_coodinates">Initial coordinates (X Y)</string>
+    <string name="ti_initial_coodinates_error">Enter the initial coordinates in correct format</string>
+    <string name="ti_orientation">Initial orientation (N, S, E, W)</string>
+    <string name="ti_orientation_error">Enter the initial orientation (N, S, E, W) in correct format</string>
+    <string name="ti_input">Initial sequence</string>
+    <string name="ti_input_error">Enter a valid initial sequence</string>
+    <string name="ti_output">No output data...</string>
+    <string name="btn_submit">SUBMIT</string>
+
 </resources>
