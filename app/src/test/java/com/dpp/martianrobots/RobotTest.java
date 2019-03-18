@@ -96,5 +96,23 @@ public class RobotTest {
         assertThat(output).isEqualTo("3 3 N LOST");
     }
 
+    @Test
+    public void checkInputDataFromChallenge() throws Exception {
+        grid = new Coordinate(5, 3);
+        coordinate = new Coordinate(1, 1);
+        position = new Position(coordinate, Orientation.EAST);
+        robot = new Robot(position, grid);
+        assertThat(robot.getOutputSequence("RFRFRFRF")).isEqualTo("1 1 E");
 
+        coordinate = new Coordinate(3, 2);
+        position = new Position(coordinate, Orientation.NORTH);
+        robot.setPosition(position);
+        assertThat(robot.getOutputSequence("FRRFLLFFRRFLL")).isEqualTo("3 3 N LOST");
+
+        coordinate = new Coordinate(0, 3);
+        position = new Position(coordinate, Orientation.WEST);
+        robot.setPosition(position);
+        assertThat(robot.getOutputSequence("LLFFFLFLFL")).isEqualTo("2 3 S");
+    }
+    
 }
