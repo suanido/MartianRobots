@@ -86,7 +86,15 @@ public class RobotTest {
         assertThat(output).contains("LOST");
     }
 
-
+    @Test
+    public void checkFromCoordinatesWhenOutOfGrid() throws Exception {
+        coordinate = new Coordinate(3, 3);
+        grid = new Coordinate(3, 3);
+        position = new Position(coordinate, Orientation.NORTH);
+        robot = new Robot(position, grid);
+        String output = robot.getOutputSequence("F");
+        assertThat(output).isEqualTo("3 3 N LOST");
+    }
 
 
 }

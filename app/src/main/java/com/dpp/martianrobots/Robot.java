@@ -1,13 +1,17 @@
 package com.dpp.martianrobots;
 
+import java.util.ArrayList;
+
 public class Robot {
 
     private Position position;
     private Coordinate grid;
+    private ArrayList<Coordinate> scentCoordinates;
 
     public Robot(Position position, Coordinate grid) {
         this.position = position;
         this.grid = grid;
+        scentCoordinates = new ArrayList<>();
     }
 
     public Position getPosition() {
@@ -30,9 +34,23 @@ public class Robot {
         checkInputParams(inputSequence);
         for (char letter : inputSequence.toCharArray()) {
             if (letter == 'F') {
-                position.getCoordinate().move(position.getOrientation());
-                if (checkIfLost(position) != null) {
-                    return checkIfLost(position).getX() + " " + checkIfLost(position).getY() + " " + position.getOrientation().getOrientatioName() + " LOST";
+                if (scentCoordinates.contains(position.getCoordinate())) {
+                    position.getCoordinate().move(position.getOrientation());
+                    //Come back to position before move
+                    if (checkIfXOutEdge()) {
+                        int posAux = position.getCoordinate().getX();
+                        position.getCoordinate().setX(posAux - 1);
+                    }
+                    if (checkIfYOutEdge()) {
+                        int posAux = position.getCoordinate().getY();
+                        position.getCoordinate().setY(posAux - 1);
+                    }
+                } else {
+                    position.getCoordinate().move(position.getOrientation());
+                    Coordinate lostCoordinate = checkIfItLostCoordinate(position);
+                    if (lostCoordinate != null) {
+                        return lostCoordinate.getX() + " " + lostCoordinate.getY() + " " + position.getOrientation().getOrientatioName() + " LOST";
+                    }
                 }
             } else if (letter == 'L') {
                 changeOrientation(-1);
@@ -68,13 +86,15 @@ public class Robot {
             throw new Exception("Initial coordinate exceeds the value");
     }
 
-    private Coordinate checkIfLost(Position position) {
+    private Coordinate checkIfItLostCoordinate(Position position) {
         Coordinate coordinateBeforeLost = null;
         if (checkIfXOutEdge()) {
             coordinateBeforeLost = new Coordinate(position.getCoordinate().getX() - 1, position.getCoordinate().getY());
+            scentCoordinates.add(coordinateBeforeLost);
         }
         if (checkIfYOutEdge()) {
             coordinateBeforeLost = new Coordinate(position.getCoordinate().getX(), position.getCoordinate().getY() - 1);
+            scentCoordinates.add(coordinateBeforeLost);
         }
         return coordinateBeforeLost;
     }
