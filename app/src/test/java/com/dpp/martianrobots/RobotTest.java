@@ -114,5 +114,5 @@ public class RobotTest {
         robot.setPosition(position);
         assertThat(robot.getOutputSequence("LLFFFLFLFL")).isEqualTo("2 3 S");
     }
-    
+
 }
